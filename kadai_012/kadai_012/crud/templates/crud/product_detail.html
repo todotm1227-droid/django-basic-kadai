@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+{% block title %}商品詳細{% endblock %}
+{% block content %}
+    <h1>商品詳細画面</h1>
+
+    <table class="table table-bordered">
+        <tr>
+            <th>商品名</th>
+            <td>{{ product.name }}</td>
+        </tr>
+        <tr>
+            <th>価格</th>
+            <td>{{ product.price }} 円</td>
+        </tr>
+         <tr>
+            <th>カテゴリ</th>
+            <!-- product.categoryでCategoryオブジェクトを取得し、.nameでカテゴリ名を表示 -->
+            <td>{{ product.category.name }}</td>
+        </tr>
+        <tr>
+            <th>商品画像</th>
+            <td>
+                <!-- product.img.urlで画像ファイルのパスを取得 -->
+                <!-- 画像が表示されない場合は、settings.pyのMEDIA_URLとMEDIA_ROOTの設定を確認してください -->
+                <img src="{{ product.img.url }}" alt="{{ product.name }}" style="max-width: 200px; height: auto;">
+            </td>
+        </tr>
+        <tr>
+            <th>詳細説明</th>
+            <!-- TextFieldの内容を表示。defaultフィルターで説明がない場合の表示を指定 -->
+            <td>{{ product.description | default:"説明は登録されていません。" }}</td>
+        </tr>
+
+    </table>
+
+    <a href="{% url 'list' %}" class="btn btn-secondary">商品一覧に戻る</a>
+    <a href="{% url 'edit' pk=product.pk %}" class="btn btn-primary">この商品を編集する</a>
+
+{% endblock %}
